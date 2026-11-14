@@ -29,7 +29,6 @@ public final class YamlConfigLoader implements ConfigLoader {
         Yaml yaml = new Yaml(new Constructor(clazz, new LoaderOptions()));
             return yaml.load(stream);
         } catch (IOException e) {
-            // todo log
             throw new IllegalStateException(e);
         }
     }
