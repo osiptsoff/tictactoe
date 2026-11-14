@@ -11,6 +11,18 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
+    <properties>
+        <snakeyaml.version>2.6</snakeyaml.version>
+    </properties>
+
     <groupId>ru.sbp.osiptsoff.tictactoe</groupId>
     <artifactId>common</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+            <version>${snakeyaml.version}</version>
+        </dependency>
+    </dependencies>
 </project>
