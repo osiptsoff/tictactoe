@@ -6,12 +6,17 @@
 
     <groupId>ru.sbp.osiptsoff.tictactoe</groupId>
     <artifactId>parent</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>${revision}</version>
     <packaging>pom</packaging>
 
     <properties>
-        <maven.compiler.source>24</maven.compiler.source>
-        <maven.compiler.target>24</maven.compiler.target>
+        <revision>1.0-SNAPSHOT</revision>
+
+        <java.version>24</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+
+        <flatten-plugin.version>1.9.0</flatten-plugin.version>
 
         <lombok.version>1.18.46</lombok.version>
         <netty.version>4.2.20.Final</netty.version>
@@ -50,10 +55,36 @@
     <modules>
         <module>server</module>
         <module>client</module>
+        <module>common</module>
     </modules>
 
 	<build>
 		<plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>${flatten-plugin.version}</version>
+                <configuration>
+                <updatePomFile>true</updatePomFile>
+                <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
