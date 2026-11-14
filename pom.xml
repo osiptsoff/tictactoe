@@ -10,8 +10,8 @@
     <packaging>pom</packaging>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>24</maven.compiler.source>
+        <maven.compiler.target>24</maven.compiler.target>
 
         <lombok.version>1.18.46</lombok.version>
         <netty.version>4.2.20.Final</netty.version>
@@ -61,6 +61,7 @@
 						<path>
 							<groupId>org.projectlombok</groupId>
 							<artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
