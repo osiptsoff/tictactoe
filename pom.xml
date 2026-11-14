@@ -48,7 +48,7 @@
     </dependencies>
 
     <modules>
-        
+        <module>server</module>
     </modules>
 
 	<build>
