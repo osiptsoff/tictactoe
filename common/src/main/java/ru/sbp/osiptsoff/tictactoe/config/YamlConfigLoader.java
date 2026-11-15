@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
+import org.yaml.snakeyaml.introspector.BeanAccess;
 
 /**
  * YamlConfigLoader is responsible for parsing and loading yaml configuration.
@@ -26,7 +27,12 @@ public final class YamlConfigLoader implements ConfigLoader {
     @Override
     public Config load(Class<? extends Config> clazz) {
         try (InputStream stream = openConfigFile()) {
-        Yaml yaml = new Yaml(new Constructor(clazz, new LoaderOptions()));
+            LoaderOptions loaderOptions = new LoaderOptions();
+
+            loaderOptions.setProcessComments(true);
+
+            Yaml yaml = new Yaml(new Constructor(clazz, loaderOptions));
+            yaml.setBeanAccess(BeanAccess.FIELD);
             return yaml.load(stream);
         } catch (IOException e) {
             throw new IllegalStateException(e);

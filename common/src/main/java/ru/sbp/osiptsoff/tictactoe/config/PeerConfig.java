@@ -1,51 +1,56 @@
 package ru.sbp.osiptsoff.tictactoe.config;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 public class PeerConfig implements Config {
     /**
      * threads config section
      */
-    private final Thread thread;
+    private Thread thread;
 
     /**
      * port config section
      */
-    private final Port port;
+    private Port port;
 
-    @Getter 
-    @RequiredArgsConstructor 
-    public class Thread {
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class Thread {
         /**
          * number of connection management threads
          */
-        private final int boss;
+        private int boss;
 
         /**
          * number of reader-writer threads
          */
-        private final int worker;
+        private int worker;
 
         /**
          * number of business-logic threads 
          */
-        private final int processor;
+        private int processor;
     }
 
-    @Getter 
-    @RequiredArgsConstructor 
-    public class Port {
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class Port {
         /**
          * port of event exchange
          */
-        private final int event;
+        private int event;
 
         /**
          * port of data exchange
          */
-        private final int data;
+        private int data;
     }
 }

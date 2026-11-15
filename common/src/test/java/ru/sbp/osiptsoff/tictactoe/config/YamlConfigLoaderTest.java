@@ -90,6 +90,6 @@ class YamlConfigLoaderTest {
     }
 
     public static class TestConfig implements Config {
-        public String value;
+        private String value;
     }
 }

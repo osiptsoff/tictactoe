@@ -1,14 +1,17 @@
 package ru.sbp.osiptsoff.tictactoe.config;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ServerConfig extends PeerConfig {
     /**
      * server-specific config section
      */
-    private final Server server;
+    private Server server;
 
     public ServerConfig(Thread thread, Port port, Server server) {
         super(thread, port);
@@ -16,16 +19,17 @@ public class ServerConfig extends PeerConfig {
     }
 
     @Getter
-    @RequiredArgsConstructor 
-    public class Server {
+    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class Server {
         /**
          * max number of clients who can access server at the same time
          */
-        private final int maxClients;
+        private int maxClients;
 
         /**
          * max number of lobbies
          */
-        private final int maxLobbies;
+        private int maxLobbies;
     }
 }
