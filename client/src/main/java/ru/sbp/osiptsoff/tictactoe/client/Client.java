@@ -28,6 +28,7 @@ public class Client extends AbstractPeer {
     @Override 
     public synchronized void stop() {
         super.stop();
+        connection.revoke();
         connection = null;
     }
 
