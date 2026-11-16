@@ -3,6 +3,9 @@ package ru.sbp.osiptsoff.tictactoe.peer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.MultiThreadIoEventLoopGroup;
@@ -16,6 +19,11 @@ import ru.sbp.osiptsoff.tictactoe.config.PeerConfig;
  * Basic class representing tic-tac-toe client or server
  */
 public abstract class AbstractPeer {
+    /**
+     * logger
+     */
+    protected static final Logger LOG = LoggerFactory.getLogger(AbstractPeer.class);
+
     @Getter(AccessLevel.PROTECTED)
     @Setter(AccessLevel.PRIVATE)
     private Threads threads;
@@ -32,7 +40,9 @@ public abstract class AbstractPeer {
      * start peer
      */
     public final synchronized void start() {
+        LOG.debug("peer start requested");
         if (isRunning()) {
+            LOG.debug("peer already active, start aborted");
             return;
         }
 
@@ -40,20 +50,26 @@ public abstract class AbstractPeer {
         setChannels(newChannels());
 
         setRunning(true);
+        LOG.info("peer started");
     }
 
     /**
      * stop peer
      */
     public final synchronized void stop() {
+        LOG.debug("peer stop requested");
         if (!isRunning()) {
+            LOG.debug("peer is not active, stop aborted");
             return;
         }
 
         getChannels().close();
+        LOG.debug("channels closed");
         getThreads().shutdown();
+        LOG.debug("threads shut");
 
         setRunning(false);
+        LOG.info("peer stopped");
     }
 
     /**
@@ -91,6 +107,16 @@ public abstract class AbstractPeer {
     private Channels newChannels() {
         ChannelFuture eventChannel = setupEventChannel();
         ChannelFuture dataChannel = setupDataChannel();
+
+        try {
+            eventChannel.sync();
+            LOG.debug("event channel set up");
+            dataChannel.sync();
+            LOG.debug("data channel set up");
+        } catch (InterruptedException ie) {
+            LOG.debug("channel setup wait interrupted", ie);
+            Thread.currentThread().interrupt();
+        }
 
         // todo will we have an infinitw loop since stop must call close? find out
         eventChannel.channel().closeFuture().addListener(_ -> stop());
