@@ -1,0 +1,12 @@
+port:
+  event: 8080
+  data: 8081
+
+thread:
+  boss: 1
+  worker: 2
+  processor: 2
+
+server:
+  maxClients: 100
+  maxLobbies: 50
