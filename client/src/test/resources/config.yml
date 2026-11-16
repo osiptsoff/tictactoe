@@ -1,0 +1,11 @@
+port:
+  event: 8080
+  data: 8081
+
+thread:
+  boss: 0
+  worker: 2
+  processor: 2
+
+client:
+  host: 127.0.0.1

@@ -39,7 +39,7 @@ public abstract class AbstractPeer {
     /**
      * start peer
      */
-    public final synchronized void start() {
+    public synchronized void start() {
         LOG.debug("peer start requested");
         if (isRunning()) {
             LOG.debug("peer already active, start aborted");
@@ -56,7 +56,7 @@ public abstract class AbstractPeer {
     /**
      * stop peer
      */
-    public final synchronized void stop() {
+    public synchronized void stop() {
         LOG.debug("peer stop requested");
         if (!isRunning()) {
             LOG.debug("peer is not active, stop aborted");
