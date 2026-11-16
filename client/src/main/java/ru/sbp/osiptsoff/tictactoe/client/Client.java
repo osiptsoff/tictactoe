@@ -21,15 +21,19 @@ public class Client extends AbstractPeer {
 
     @Override
     public synchronized void start() {
-        super.start();
-        connection = new Connection(getChannels());
+        if (!isRunning()) {
+            super.start();
+            connection = new Connection(getChannels());
+        }
     }
 
     @Override 
     public synchronized void stop() {
-        super.stop();
-        connection.revoke();
-        connection = null;
+        if (isRunning()) {
+            connection.revoke();
+            connection = null;
+            super.stop();
+        }
     }
 
     @Override
