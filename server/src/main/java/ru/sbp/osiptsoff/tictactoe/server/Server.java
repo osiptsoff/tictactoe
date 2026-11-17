@@ -36,7 +36,6 @@ public class Server extends AbstractPeer {
     protected ChannelFuture setupDataChannel() {
         Bootstrap bootstrap = new Bootstrap();
 
-        // todo fix immediate close
         bootstrap
             .group(getThreads().getWorkerGroup())
             .channel(NioDatagramChannel.class)

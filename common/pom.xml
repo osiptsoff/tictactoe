@@ -13,6 +13,7 @@
 
     <properties>
         <snakeyaml.version>2.6</snakeyaml.version>
+        <protostuff.version>1.8.0</protostuff.version>
     </properties>
 
     <groupId>ru.sbp.osiptsoff.tictactoe</groupId>
@@ -23,6 +24,22 @@
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
             <version>${snakeyaml.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.protostuff</groupId>
+            <artifactId>protostuff-core</artifactId>
+            <version>${protostuff.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.protostuff</groupId>
+            <artifactId>protostuff-runtime</artifactId>
+            <version>${protostuff.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.protostuff</groupId>
+            <artifactId>protostuff-api</artifactId>
+            <version>${protostuff.version}</version>
         </dependency>
 
         <dependency>
