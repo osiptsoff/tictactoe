@@ -7,10 +7,11 @@ import io.protostuff.LinkedBuffer;
 import io.protostuff.ProtobufIOUtil;
 import io.protostuff.Schema;
 import io.protostuff.runtime.RuntimeSchema;
+import lombok.AccessLevel;
+import lombok.Getter;
 
 /**
  * Encodes/decodes objects with Protobuf.
- * Warning: ThreadLocal in class.
  */
 public class ProtobufSerializer implements Serializer {
     /**
@@ -18,14 +19,8 @@ public class ProtobufSerializer implements Serializer {
      */
     private static final Map<Class<?>, Schema<?>> SCHEMAS = new ConcurrentHashMap<>();
 
-    /**
-     * Here we avoid allocation overhead.
-     * Must be used in assumption that tasks cannot be preempted (which suits
-     * netty event loop architecture).
-     */
-    private static final ThreadLocal<LinkedBuffer> BUFFER = ThreadLocal.withInitial(
-        () -> LinkedBuffer.allocate(512)
-    );
+    @Getter(AccessLevel.PRIVATE)
+    private final LinkedBuffer reusableBuffer = LinkedBuffer.allocate(512);
 
     private static <T> Schema<T> getSchema(Class<T> clazz) {
         Schema<T> schema = (Schema<T>) SCHEMAS.get(clazz);
@@ -38,13 +33,9 @@ public class ProtobufSerializer implements Serializer {
         return schema;
     }
 
-    private static LinkedBuffer getBuffer() {
-        return BUFFER.get();
-    }
-
     @Override
     public <T> byte[] serialize(T obj) {
-        LinkedBuffer buffer = getBuffer();
+        LinkedBuffer buffer = getReusableBuffer();
         Schema<T> schema = getSchema((Class<T>) obj.getClass());
 
         try {
