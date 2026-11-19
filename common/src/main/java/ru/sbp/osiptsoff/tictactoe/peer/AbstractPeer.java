@@ -118,7 +118,6 @@ public abstract class AbstractPeer {
             Thread.currentThread().interrupt();
         }
 
-        // todo will we have an infinite loop since stop must call close? find out
         eventChannel.channel().closeFuture().addListener(_ -> stop());
         dataChannel.channel().closeFuture().addListener(_ -> stop());
 
