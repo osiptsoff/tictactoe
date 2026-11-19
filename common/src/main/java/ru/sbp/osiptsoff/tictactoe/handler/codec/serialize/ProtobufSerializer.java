@@ -10,7 +10,6 @@ import io.protostuff.runtime.RuntimeSchema;
 
 /**
  * Encodes/decodes objects with Protobuf.
- * Warning: ThreadLocal in class.
  */
 public class ProtobufSerializer implements Serializer {
     /**
