@@ -1,11 +1,14 @@
 package ru.sbp.osiptsoff.tictactoe.handler.codec.serialize;
 
 /**
- * Object responsible for encoding and decoding POJO for wire.
+ * Object responsible for encoding and decoding POJO.
  */
 public interface Serializer {
     /**
      * Serialize object to byte array.
+     * Generally, this does not proride framing functionality, 
+     * as well as there will be no way to distinguish type
+     * before complete deserialization.
      * 
      * @param <T> object's type
      * 

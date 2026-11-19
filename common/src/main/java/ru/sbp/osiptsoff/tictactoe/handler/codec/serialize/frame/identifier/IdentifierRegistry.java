@@ -1,4 +1,4 @@
-package ru.sbp.osiptsoff.tictactoe.handler.codec.identifier;
+package ru.sbp.osiptsoff.tictactoe.handler.codec.serialize.frame.identifier;
 
 import java.util.HashMap;
 import java.util.Map;
