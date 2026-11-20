@@ -1,7 +1,6 @@
 package ru.sbp.osiptsoff.tictactoe.handler.codec.serialize.frame;
 
 import io.netty.buffer.ByteBuf;
-import ru.sbp.osiptsoff.tictactoe.handler.codec.serialize.Serializer;
 
 /**
  * Object responsible for framing and providing unambigous way to distinguish
@@ -9,23 +8,26 @@ import ru.sbp.osiptsoff.tictactoe.handler.codec.serialize.Serializer;
  */
 public interface Framer {
     /**
-     * Read message from frame.
-     * 
+     * Find type and deframe bytes to pure payload.
+     * Sets reader index to position from which message payload starts.
      * 
      * @param inBuf buffer to read data from
-     * @param serializer message serializer
      * 
-     * @return message
+     * @return information which allows deframing
      */
-    Object readFramedMessage(ByteBuf inBuf, Serializer serializer);
+    DeframingResult deframe(ByteBuf inoutBuf);
 
     /**
-     * Frame and write message in a way it can be unambigously read later.
-     * 
+     * Frame message in a way that further deframing will
+     * be able unambigously distinguish its type
+     * Modifies buffer content.
+     * Sets writer index to position from which message payload can be written.
      * 
      * @param outBuf buffer to write data to
-     * @param serializer message serializer
      * @param message message
+     * @param serializedMessageSize message size in bytes after serialization
      */
-    void writeFramedMessage(ByteBuf outBuf, Serializer serializer, Object message);
+    void frame(ByteBuf inoutBuf, Object message, int serializedMessageSize);
+
+    public record DeframingResult(Class<?> messageType, int messageLength) { }
 }

@@ -1,7 +1,6 @@
 package ru.sbp.osiptsoff.tictactoe.handler.codec.serialize.frame;
 
 import io.netty.buffer.ByteBuf;
-import ru.sbp.osiptsoff.tictactoe.handler.codec.serialize.Serializer;
 import ru.sbp.osiptsoff.tictactoe.handler.codec.serialize.frame.identifier.IdentifierRegistry;
 
 /**
@@ -16,19 +15,15 @@ import ru.sbp.osiptsoff.tictactoe.handler.codec.serialize.frame.identifier.Ident
 public class PrefixFramer implements Framer {
 
     @Override
-    public Object readFramedMessage(ByteBuf inBuf, Serializer serializer) {
-        Class<?> clazz = IdentifierRegistry.getClass(inBuf.readLong());
-        byte[] bytes = new byte[inBuf.readableBytes()];
-        inBuf.readBytes(bytes);
+    public DeframingResult deframe(ByteBuf inoutBuf) {
+        Class<?> clazz = IdentifierRegistry.getClass(inoutBuf.readLong());
         
-        return serializer.deserialize(bytes, clazz);
+        return new DeframingResult(clazz, inoutBuf.readableBytes());
     }
 
     @Override
-    public void writeFramedMessage(ByteBuf outBuf, Serializer serializer, Object message) {
-        byte[] serialized = serializer.serialize(message);
-        outBuf.writeLong(IdentifierRegistry.getIdentifier(message));
-        outBuf.writeBytes(serialized);
+    public void frame(ByteBuf inoutBuf, Object message, int serializedMessageSize) {
+        inoutBuf.writeLong(IdentifierRegistry.getIdentifier(message));
     }
     
 }

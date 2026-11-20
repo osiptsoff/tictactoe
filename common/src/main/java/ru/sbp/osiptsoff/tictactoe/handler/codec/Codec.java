@@ -29,12 +29,20 @@ public final class Codec extends ByteToMessageCodec<Message> {
 
     @Override
     protected void encode(ChannelHandlerContext ctx, Message msg, ByteBuf out) throws Exception {
-        framer.writeFramedMessage(out, serializer, out);
+        byte[] encodedMessage = serializer.serialize(msg);
+        framer.frame(out, msg, encodedMessage.length);
+        out.writeBytes(encodedMessage);
     }
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
-        out.add(framer.readFramedMessage(in, serializer));
+        Framer.DeframingResult deframingResult = framer.deframe(in);
+
+        byte[] encodedMessage = new byte[deframingResult.messageLength()];
+        in.readBytes(encodedMessage);
+        Object message = serializer.deserialize(encodedMessage, deframingResult.messageType());
+
+        out.add(message);
     }
     
 }
