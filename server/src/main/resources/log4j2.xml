@@ -25,6 +25,11 @@
             </Policies>
             <DefaultRolloverStrategy max="10"/>
         </RollingFile>
+
+        <Async name="AsyncAppender" bufferSize="2048" blocking="false">
+            <AppenderRef ref="ConsoleAppender" />
+            <AppenderRef ref="FileAppender" />
+        </Async>
     </Appenders>
 
     <Loggers>

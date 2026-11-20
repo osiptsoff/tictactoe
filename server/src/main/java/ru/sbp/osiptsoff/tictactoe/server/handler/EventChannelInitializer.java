@@ -4,6 +4,8 @@ package ru.sbp.osiptsoff.tictactoe.server.handler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 import lombok.RequiredArgsConstructor;
+import ru.sbp.osiptsoff.tictactoe.handler.bootstrap.BootstrapChain;
+import ru.sbp.osiptsoff.tictactoe.handler.bootstrap.ProtobufCodecBootstrap;
 import ru.sbp.osiptsoff.tictactoe.server.Server;
 
 /**
@@ -15,7 +17,10 @@ public class EventChannelInitializer extends ChannelInitializer<SocketChannel> {
 
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
-        // todo handlers
+        new BootstrapChain()
+            .forPipeline(ch.pipeline())
+            .withBootstrap(new ProtobufCodecBootstrap())
+            .bootstrap();
     }
     
 }
