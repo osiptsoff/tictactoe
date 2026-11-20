@@ -63,12 +63,13 @@ public abstract class AbstractPeer {
             return;
         }
 
+        setRunning(false);
+
         getChannels().close();
         LOG.debug("channels closed");
         getThreads().shutdown();
         LOG.debug("threads shut");
 
-        setRunning(false);
         LOG.info("peer stopped");
     }
 
