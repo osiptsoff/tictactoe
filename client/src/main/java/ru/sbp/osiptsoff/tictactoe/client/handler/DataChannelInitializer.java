@@ -2,12 +2,10 @@ package ru.sbp.osiptsoff.tictactoe.client.handler;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.nio.NioDatagramChannel;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import lombok.RequiredArgsConstructor;
 import ru.sbp.osiptsoff.tictactoe.client.Client;
-import ru.sbp.osiptsoff.tictactoe.handler.codec.Codec;
-import ru.sbp.osiptsoff.tictactoe.handler.codec.serialize.ProtobufSerializer;
-import ru.sbp.osiptsoff.tictactoe.handler.codec.serialize.frame.PrefixFramer;
+import ru.sbp.osiptsoff.tictactoe.handler.bootstrap.BootstrapChain;
+import ru.sbp.osiptsoff.tictactoe.handler.bootstrap.ProtobufCodecBootstrap;
 
 /**
  * Client data channel initializer.
@@ -18,15 +16,10 @@ public class DataChannelInitializer extends ChannelInitializer<NioDatagramChanne
 
     @Override
     protected void initChannel(NioDatagramChannel ch) throws Exception {
-        ch.pipeline()
-            .addLast(new LengthFieldBasedFrameDecoder(
-                1024 * 16,
-                0,
-                Integer.BYTES,
-                -Integer.BYTES,
-                0
-            ))
-            .addLast(new Codec(new ProtobufSerializer(), new PrefixFramer()));
+        new BootstrapChain()
+            .forPipeline(ch.pipeline())
+            .withBootstrap(new ProtobufCodecBootstrap())
+            .bootstrap();
     }
     
 }
