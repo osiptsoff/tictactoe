@@ -1,17 +1,24 @@
-package ru.sbp.osiptsoff.tictactoe.handler.bootstrap;
+package ru.sbp.osiptsoff.tictactoe.handler.bootstrap.codec;
 
 import io.netty.channel.ChannelPipeline;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
-import ru.sbp.osiptsoff.tictactoe.handler.codec.Codec;
+import ru.sbp.osiptsoff.tictactoe.handler.bootstrap.HandlerBootstrap;
+import ru.sbp.osiptsoff.tictactoe.handler.codec.Decoder;
+import ru.sbp.osiptsoff.tictactoe.handler.codec.Encoder;
+import ru.sbp.osiptsoff.tictactoe.handler.codec.frame.Framer;
 import ru.sbp.osiptsoff.tictactoe.handler.codec.frame.PrefixFramer;
 import ru.sbp.osiptsoff.tictactoe.handler.codec.serialize.ProtobufSerializer;
+import ru.sbp.osiptsoff.tictactoe.handler.codec.serialize.Serializer;
 
 /**
  * Adds all handlers necessary for decoding/encoding.
  * Applies length-based frame decoder and protobuff codec.
+ * For TCP.
  */
-public class ProtobufCodecBootstrap implements HandlerBootstrap {
+public class TcpProtobufCodecBootstrap implements HandlerBootstrap {
+    private final Serializer serializer = new ProtobufSerializer();
+    private final Framer framer = new PrefixFramer();
 
     @Override
     public ChannelPipeline bootstrap(ChannelPipeline pipeline) {
@@ -24,7 +31,8 @@ public class ProtobufCodecBootstrap implements HandlerBootstrap {
                 Integer.BYTES
             ))
             .addLast(new LengthFieldPrepender(Integer.BYTES))
-            .addLast(new Codec(new ProtobufSerializer(), new PrefixFramer()));
+            .addLast(new Encoder(serializer, framer))
+            .addLast(new Decoder(serializer, framer));
     }
     
 }

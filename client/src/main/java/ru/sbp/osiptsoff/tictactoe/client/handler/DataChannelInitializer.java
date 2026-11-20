@@ -5,7 +5,7 @@ import io.netty.channel.socket.nio.NioDatagramChannel;
 import lombok.RequiredArgsConstructor;
 import ru.sbp.osiptsoff.tictactoe.client.Client;
 import ru.sbp.osiptsoff.tictactoe.handler.bootstrap.BootstrapChain;
-import ru.sbp.osiptsoff.tictactoe.handler.bootstrap.ProtobufCodecBootstrap;
+import ru.sbp.osiptsoff.tictactoe.handler.bootstrap.codec.UdpProtobufCodecBootstrap;
 
 /**
  * Client data channel initializer.
@@ -18,7 +18,7 @@ public class DataChannelInitializer extends ChannelInitializer<NioDatagramChanne
     protected void initChannel(NioDatagramChannel ch) throws Exception {
         new BootstrapChain()
             .forPipeline(ch.pipeline())
-            .withBootstrap(new ProtobufCodecBootstrap())
+            .withBootstrap(new UdpProtobufCodecBootstrap())
             .bootstrap();
     }
     
