@@ -2,6 +2,7 @@ package ru.sbp.osiptsoff.tictactoe.handler.bootstrap;
 
 import io.netty.channel.ChannelPipeline;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldPrepender;
 import ru.sbp.osiptsoff.tictactoe.handler.codec.Codec;
 import ru.sbp.osiptsoff.tictactoe.handler.codec.serialize.ProtobufSerializer;
 import ru.sbp.osiptsoff.tictactoe.handler.codec.serialize.frame.PrefixFramer;
@@ -19,9 +20,10 @@ public class ProtobufCodecBootstrap implements HandlerBootstrap {
                 1024 * 16,
                 0,
                 Integer.BYTES,
-                -Integer.BYTES,
-                0
+                0,
+                Integer.BYTES
             ))
+            .addLast(new LengthFieldPrepender(Integer.BYTES))
             .addLast(new Codec(new ProtobufSerializer(), new PrefixFramer()));
     }
     
