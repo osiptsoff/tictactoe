@@ -4,8 +4,8 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 import ru.sbp.osiptsoff.tictactoe.handler.codec.Codec;
+import ru.sbp.osiptsoff.tictactoe.handler.codec.frame.PrefixFramer;
 import ru.sbp.osiptsoff.tictactoe.handler.codec.serialize.ProtobufSerializer;
-import ru.sbp.osiptsoff.tictactoe.handler.codec.serialize.frame.PrefixFramer;
 
 /**
  * Adds all handlers necessary for decoding/encoding.

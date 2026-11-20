@@ -1,4 +1,4 @@
-package ru.sbp.osiptsoff.tictactoe.handler.codec.serialize.frame;
+package ru.sbp.osiptsoff.tictactoe.handler.codec.frame;
 
 import io.netty.buffer.ByteBuf;
 

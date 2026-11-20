@@ -6,8 +6,8 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageCodec;
 import lombok.RequiredArgsConstructor;
+import ru.sbp.osiptsoff.tictactoe.handler.codec.frame.Framer;
 import ru.sbp.osiptsoff.tictactoe.handler.codec.serialize.Serializer;
-import ru.sbp.osiptsoff.tictactoe.handler.codec.serialize.frame.Framer;
 import ru.sbp.osiptsoff.tictactoe.message.Message;
 
 /**
