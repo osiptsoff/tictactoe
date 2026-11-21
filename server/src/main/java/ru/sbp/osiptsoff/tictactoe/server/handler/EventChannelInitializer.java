@@ -5,6 +5,7 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.socket.SocketChannel;
 import lombok.RequiredArgsConstructor;
 import ru.sbp.osiptsoff.tictactoe.handler.bootstrap.BootstrapChain;
+import ru.sbp.osiptsoff.tictactoe.handler.bootstrap.IdleStateBootstrap;
 import ru.sbp.osiptsoff.tictactoe.handler.bootstrap.codec.TcpProtobufCodecBootstrap;
 import ru.sbp.osiptsoff.tictactoe.server.Server;
 
@@ -19,6 +20,10 @@ public class EventChannelInitializer extends ChannelInitializer<SocketChannel> {
     protected void initChannel(SocketChannel ch) throws Exception {
         new BootstrapChain()
             .forPipeline(ch.pipeline())
+            .withBootstrap(new IdleStateBootstrap(
+                server.getConfig().getIdleSeconds().getEvent().getRead(),
+                server.getConfig().getIdleSeconds().getEvent().getWrite(),
+                null))
             .withBootstrap(new TcpProtobufCodecBootstrap())
             .bootstrap();
     }

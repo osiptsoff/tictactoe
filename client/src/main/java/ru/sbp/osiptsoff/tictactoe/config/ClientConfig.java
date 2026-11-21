@@ -12,11 +12,6 @@ public class ClientConfig extends PeerConfig {
      * client-specific config section
      */
     private Client client;
-
-    public ClientConfig(Thread thread, Port port, Client client) {
-        super(thread, port);
-        this.client = client;
-    }
     
     @Getter
     @AllArgsConstructor

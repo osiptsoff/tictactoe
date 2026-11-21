@@ -7,5 +7,10 @@ thread:
   worker: 2
   processor: 2
 
+idleSeconds:
+  event:
+    read: 5
+    write: 5
+
 client:
   host: 127.0.0.1
