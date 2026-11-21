@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelId;
 import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Sinks;
 
 /**
@@ -15,8 +16,8 @@ import reactor.core.publisher.Sinks;
 public class DuplexRegistry {
     private final Map<ChannelId, Duplex> registry = new ConcurrentHashMap<>();
 
-    private final Sinks.Many<Pipe> registerEvents;
-    private final Sinks.Many<Pipe> deregisterEvents;
+    private final Sinks.Many<Pipe> registerEvents = Sinks.many().unicast().onBackpressureError();
+    private final Sinks.Many<Pipe> deregisterEvents = Sinks.many().unicast().onBackpressureError();
 
     /**
      * Create reactor's duplex for channel and memorize it.
@@ -44,5 +45,19 @@ public class DuplexRegistry {
         registry.remove(channel.id());
         // todo emit player id
         deregisterEvents.tryEmitNext(duplex.getLogicSide());
+    }
+
+    /**
+     * @return flux of register events
+     */
+    public Flux<Pipe> getRegisterEvents() {
+        return registerEvents.asFlux();
+    }
+
+    /**
+     * @return flux of deregister events
+     */
+    public Flux<Pipe> getDeregisterEvents() {
+        return deregisterEvents.asFlux();
     }
 }

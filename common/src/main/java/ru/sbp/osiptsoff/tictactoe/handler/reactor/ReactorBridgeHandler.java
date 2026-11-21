@@ -8,6 +8,11 @@ import ru.sbp.osiptsoff.tictactoe.message.Message;
 import ru.sbp.osiptsoff.tictactoe.reactor.DuplexRegistry;
 import ru.sbp.osiptsoff.tictactoe.reactor.Pipe;
 
+/**
+ * Emits inbound messages to sink, accepts messages
+ * from sink and writes them on wire, building a bridge
+ * between netty and reactor.
+ */
 @RequiredArgsConstructor
 public class ReactorBridgeHandler extends ChannelInboundHandlerAdapter {
     private final DuplexRegistry duplexRegistry;
