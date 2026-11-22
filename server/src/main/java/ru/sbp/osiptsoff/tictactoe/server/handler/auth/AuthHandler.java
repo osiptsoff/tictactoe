@@ -87,8 +87,11 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
 
         ClientDescription description = authRequested.getClientDescription();
         description.setSocketAddress(channel.remoteAddress());
+
+        ClientId clientId = authRegistry.register(description);
+        channel.attr(CLIENT_ID).set(clientId);
         
-        return Optional.of(authRegistry.register(description));
+        return Optional.of(clientId);
     }
 
     private boolean isCredentialsNeeded() {
