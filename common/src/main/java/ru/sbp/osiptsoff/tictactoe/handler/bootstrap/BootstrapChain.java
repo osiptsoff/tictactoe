@@ -3,6 +3,7 @@ package ru.sbp.osiptsoff.tictactoe.handler.bootstrap;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelPipeline;
 
 /**
@@ -33,6 +34,15 @@ public final class BootstrapChain {
         bootstraps.add(bootstrap);
 
         return this;
+    }
+
+    /**
+     * @param handler additional handler to add to pipe
+     * 
+     * @return this object for chaining
+     */
+    public BootstrapChain withHandler(ChannelHandler handler) {
+        return withBootstrap(p -> p.addLast(handler));
     }
 
     /**
