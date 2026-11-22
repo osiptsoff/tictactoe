@@ -55,7 +55,9 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
         if (isAuthRequest(msg)) {
             Optional<ClientId> clientIdOptional = authorize(ctx.channel(), msg);
             if (clientIdOptional.isPresent()) {
-                ctx.channel().write(new AuthPerformed(clientIdOptional.get()));
+                AuthPerformed authPerformed = new AuthPerformed(clientIdOptional.get());
+                ctx.channel().writeAndFlush(authPerformed);
+                ctx.fireUserEventTriggered(authPerformed);
             } else {
                 deny(ctx, AuthError.Type.WRONG_CREDENTIALS);
             }
