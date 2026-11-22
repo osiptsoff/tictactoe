@@ -26,5 +26,10 @@ public class ServerConfig extends PeerConfig {
          * max number of lobbies
          */
         private int maxLobbies;
+
+        /**
+         * credentials which client has to know to connect
+         */
+        private String credentials;
     }
 }
