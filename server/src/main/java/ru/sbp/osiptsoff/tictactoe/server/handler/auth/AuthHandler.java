@@ -53,7 +53,7 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
 
     private void processUnauthorized(ChannelHandlerContext ctx, Object msg) {
         if (isAuthRequest(msg)) {
-            Optional<ClientId> clientIdOptional = authorize(msg);
+            Optional<ClientId> clientIdOptional = authorize(ctx.channel(), msg);
             if (clientIdOptional.isPresent()) {
                 ctx.channel().write(new AuthPerformed(clientIdOptional.get()));
             } else {
@@ -78,7 +78,7 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
         return id != null && authRegistry.get(id) != null;
     }
 
-    private Optional<ClientId> authorize(Object obj) {
+    private Optional<ClientId> authorize(Channel channel, Object obj) {
         AuthRequested authRequested = (AuthRequested) obj;
 
         if (isCredentialsNeeded() && !isCredentialsCorrect(authRequested.getCredentials())) {
@@ -86,6 +86,7 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
         }
 
         ClientDescription description = authRequested.getClientDescription();
+        description.setSocketAddress(channel.remoteAddress());
         
         return Optional.of(authRegistry.register(description));
     }
