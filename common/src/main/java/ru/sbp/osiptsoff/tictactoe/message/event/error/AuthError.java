@@ -30,5 +30,10 @@ public class AuthError implements Error {
          * Provided cridentials are rejected
          */
         WRONG_CREDENTIALS,
+
+        /**
+         * Authorized client requested authorization
+         */
+        AUTH_REQUEST_DUPLICATED,
     }
 }
