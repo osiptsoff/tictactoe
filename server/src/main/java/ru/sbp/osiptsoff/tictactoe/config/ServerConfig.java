@@ -13,11 +13,6 @@ public class ServerConfig extends PeerConfig {
      */
     private Server server;
 
-    public ServerConfig(Thread thread, Port port, Server server) {
-        super(thread, port);
-        this.server = server;
-    }
-
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor(access = AccessLevel.PRIVATE)

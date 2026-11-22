@@ -14,6 +14,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import ru.sbp.osiptsoff.tictactoe.config.PeerConfig;
+import ru.sbp.osiptsoff.tictactoe.reactor.DuplexRegistry;
 
 /**
  * Basic class representing tic-tac-toe client or server
@@ -23,6 +24,9 @@ public abstract class AbstractPeer {
      * logger
      */
     protected static final Logger LOG = LoggerFactory.getLogger(AbstractPeer.class);
+
+    @Getter
+    private final DuplexRegistry duplexRegistry = new DuplexRegistry();
 
     @Getter(AccessLevel.PROTECTED)
     @Setter(AccessLevel.PRIVATE)

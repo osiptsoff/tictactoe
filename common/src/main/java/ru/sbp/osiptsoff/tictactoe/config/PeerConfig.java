@@ -19,6 +19,11 @@ public class PeerConfig implements Config {
      */
     private Port port;
 
+    /**
+     * idle timeouts config section
+     */
+    private IdleSeconds idleSeconds;
+
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -52,5 +57,30 @@ public class PeerConfig implements Config {
          * port of data exchange
          */
         private int data;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class IdleSeconds {
+        /**
+         * event idle timeouts section
+         */
+        private Event event;
+
+        @Getter
+        @AllArgsConstructor
+        @NoArgsConstructor(access = AccessLevel.PRIVATE)
+        public static class Event {
+            /**
+             * max idle read time
+             */
+            private int read;
+
+            /**
+             * max idle write time
+             */
+            private int write;
+        }
     }
 }

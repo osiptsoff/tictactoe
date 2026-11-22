@@ -64,6 +64,17 @@ public abstract class ConnectionCallback {
     }
 
     /**
+     * Construct ConnectionCallback from lambdas.
+     * 
+     * @param onAnyCase on any case callback
+     * 
+     * @return ConnectionCallback
+     */
+    public static ConnectionCallback of(Consumer<Future<? super Void>> onAnyCase) {
+        return of(null, null, onAnyCase);
+    }
+
+    /**
      * @param resultFuture action on succes
      */
     public abstract void onSuccess(Future<? super Void> resultFuture);

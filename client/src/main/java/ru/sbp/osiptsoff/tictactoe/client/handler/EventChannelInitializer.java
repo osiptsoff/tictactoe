@@ -5,6 +5,8 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import lombok.RequiredArgsConstructor;
 import ru.sbp.osiptsoff.tictactoe.client.Client;
 import ru.sbp.osiptsoff.tictactoe.handler.bootstrap.BootstrapChain;
+import ru.sbp.osiptsoff.tictactoe.handler.bootstrap.IdleStateBootstrap;
+import ru.sbp.osiptsoff.tictactoe.handler.bootstrap.ReactorBridgeBootstrap;
 import ru.sbp.osiptsoff.tictactoe.handler.bootstrap.codec.TcpProtobufCodecBootstrap;
 
 /**
@@ -18,7 +20,12 @@ public class EventChannelInitializer extends ChannelInitializer<NioSocketChannel
     protected void initChannel(NioSocketChannel ch) throws Exception {
         new BootstrapChain()
             .forPipeline(ch.pipeline())
+            .withBootstrap(new IdleStateBootstrap(
+                client.getConfig().getIdleSeconds().getEvent().getRead(),
+                client.getConfig().getIdleSeconds().getEvent().getWrite(),
+                null))
             .withBootstrap(new TcpProtobufCodecBootstrap())
+            .withBootstrap(new ReactorBridgeBootstrap(client.getDuplexRegistry()))
             .bootstrap();
     }
     

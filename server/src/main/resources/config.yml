@@ -7,6 +7,11 @@ thread:
   worker: 2
   processor: 2
 
+idleSeconds:
+  event:
+    read: 5
+    write: 5
+
 server:
   maxClients: 100
   maxLobbies: 50
