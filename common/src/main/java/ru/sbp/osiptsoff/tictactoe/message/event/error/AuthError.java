@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor 
 @Getter
 public class AuthError implements Error {
-    private final Type state;
+    private final Type type;
     
     /**
      * Error type.

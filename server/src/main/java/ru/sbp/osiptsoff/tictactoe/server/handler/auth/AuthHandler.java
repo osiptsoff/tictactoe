@@ -16,6 +16,11 @@ import ru.sbp.osiptsoff.tictactoe.message.event.error.AuthError;
 import ru.sbp.osiptsoff.tictactoe.model.ClientDescription;
 import ru.sbp.osiptsoff.tictactoe.model.ClientId;
 
+/**
+ * Server-side auth handler.
+ * Does not let events through if channel is not associated
+ * with client id in server registry. Supports simple credential validation.
+ */
 @RequiredArgsConstructor
 public class AuthHandler extends ChannelInboundHandlerAdapter {
     private static final Logger LOG = LoggerFactory.getLogger(AuthHandler.class);

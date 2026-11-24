@@ -21,5 +21,15 @@ public class ClientConfig extends PeerConfig {
          * server address
          */
         private String host;
+
+        /**
+         * client name
+         */
+        private String name;
+
+        /**
+         * server's credentials
+         */
+        private String credentials;
     }
 }

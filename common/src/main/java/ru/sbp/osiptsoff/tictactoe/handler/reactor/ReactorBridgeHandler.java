@@ -1,5 +1,8 @@
 package ru.sbp.osiptsoff.tictactoe.handler.reactor;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +20,8 @@ import ru.sbp.osiptsoff.tictactoe.reactor.Pipe;
  */
 @RequiredArgsConstructor
 public class ReactorBridgeHandler extends ChannelInboundHandlerAdapter {
+    private static final Logger LOG = LoggerFactory.getLogger(ReactorBridgeHandler.class);
+
     private final DuplexRegistry duplexRegistry;
 
     private ClientId clientId;
@@ -27,6 +32,7 @@ public class ReactorBridgeHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         if (!Message.class.isAssignableFrom(msg.getClass())) {
             ctx.fireChannelRead(msg);
+            LOG.warn("unauthorized message broke through auth handler");
             return;
         }
         if (pipe == null) {
@@ -45,14 +51,21 @@ public class ReactorBridgeHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) {
-        if (!AuthPerformed.class.isAssignableFrom(evt.getClass())) {
+        // is not our message at all
+        if (!Message.class.isAssignableFrom(evt.getClass())) {
             ctx.fireUserEventTriggered(evt);
-            return;
+            LOG.warn("unauthorized message broke through auth handler");
+        // is our auth message
+        } else if (AuthPerformed.class.isAssignableFrom(evt.getClass())) {
+            AuthPerformed authPerformed = (AuthPerformed) evt;
+            registerDuplex(ctx, authPerformed.getClientId());
+            ctx.fireUserEventTriggered(evt);
+        // is out non-auth message and we have where to send it
+        } else if (pipe != null) {
+            pipe.send((Message) evt);
+        } else {
+            LOG.warn("unauthorized app event broke through auth handler");
         }
-
-        AuthPerformed authPerformed = (AuthPerformed) evt;
-        registerDuplex(ctx, authPerformed.getClientId());
-        ctx.fireUserEventTriggered(evt);
     }
 
     private void registerDuplex(ChannelHandlerContext ctx, ClientId clientId) {

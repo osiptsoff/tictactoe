@@ -14,3 +14,5 @@ idleSeconds:
 
 client:
   host: 127.0.0.1
+  credentials:
+  name: test-client
