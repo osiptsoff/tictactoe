@@ -44,7 +44,9 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelInactive(ChannelHandlerContext ctx) {
         ClientId id = ctx.channel().attr(CLIENT_ID).get();
-        authRegistry.deregister(id);
+        if (id != null) {
+            authRegistry.deregister(id);
+        }
         ctx.fireChannelInactive();
     }
 

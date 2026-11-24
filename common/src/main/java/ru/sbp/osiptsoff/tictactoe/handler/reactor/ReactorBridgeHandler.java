@@ -46,9 +46,11 @@ public class ReactorBridgeHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) {
-        pipe
-            .send(new ConnectionClosed())
-            .doOnEach(_ -> deregisterDuplex());
+        if (pipe != null) {
+            pipe
+                .send(new ConnectionClosed())
+                .doOnEach(_ -> deregisterDuplex());
+        }
         ctx.fireChannelInactive();
     }
 
