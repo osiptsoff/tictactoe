@@ -9,3 +9,8 @@ thread:
 
 client:
   host: 127.0.0.1
+
+idleSeconds:
+  event:
+    read: 5
+    write: 5

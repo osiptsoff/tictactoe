@@ -9,6 +9,7 @@ import ru.sbp.osiptsoff.tictactoe.handler.bootstrap.IdleStateBootstrap;
 import ru.sbp.osiptsoff.tictactoe.handler.bootstrap.ReactorBridgeBootstrap;
 import ru.sbp.osiptsoff.tictactoe.handler.bootstrap.codec.TcpProtobufCodecBootstrap;
 import ru.sbp.osiptsoff.tictactoe.server.Server;
+import ru.sbp.osiptsoff.tictactoe.server.handler.auth.AuthHandler;
 
 /**
  * Server event channel initializer.
@@ -26,6 +27,7 @@ public class EventChannelInitializer extends ChannelInitializer<SocketChannel> {
                 server.getConfig().getIdleSeconds().getEvent().getWrite(),
                 null))
             .withBootstrap(new TcpProtobufCodecBootstrap())
+            .withHandler(new AuthHandler(server.getAuthRegistry(), server.getConfig().getServer().getCredentials()))
             .withBootstrap(new ReactorBridgeBootstrap(server.getDuplexRegistry()))
             .bootstrap();
     }

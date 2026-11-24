@@ -16,6 +16,9 @@ public class Client extends AbstractPeer {
     @Getter(onMethod = @__(@Override))
     private final ClientConfig config;
 
+    @Getter
+    private final ExchangeState exchangeState = new ExchangeState();
+
     @Getter 
     private Connection connection;
 

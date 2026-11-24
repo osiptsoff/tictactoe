@@ -12,9 +12,14 @@ import ru.sbp.osiptsoff.tictactoe.config.ServerConfig;
 import ru.sbp.osiptsoff.tictactoe.peer.AbstractPeer;
 import ru.sbp.osiptsoff.tictactoe.server.handler.DataChannelInitializer;
 import ru.sbp.osiptsoff.tictactoe.server.handler.EventChannelInitializer;
+import ru.sbp.osiptsoff.tictactoe.server.handler.auth.AuthRegistry;
+import ru.sbp.osiptsoff.tictactoe.server.handler.auth.id.LongIdGenerator;
 
 @RequiredArgsConstructor
 public class Server extends AbstractPeer {
+    @Getter
+    private final AuthRegistry authRegistry = new AuthRegistry(new LongIdGenerator());
+
     @Getter(onMethod = @__(@Override))
     private final ServerConfig config;
 
