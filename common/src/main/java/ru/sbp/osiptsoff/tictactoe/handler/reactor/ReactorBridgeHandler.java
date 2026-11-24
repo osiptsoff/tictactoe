@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import reactor.core.Disposable;
 import ru.sbp.osiptsoff.tictactoe.message.Message;
 import ru.sbp.osiptsoff.tictactoe.message.event.AuthPerformed;
+import ru.sbp.osiptsoff.tictactoe.message.event.error.ConnectionClosed;
 import ru.sbp.osiptsoff.tictactoe.model.ClientId;
 import ru.sbp.osiptsoff.tictactoe.reactor.DuplexRegistry;
 import ru.sbp.osiptsoff.tictactoe.reactor.Pipe;
@@ -45,7 +46,9 @@ public class ReactorBridgeHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) {
-        deregisterDuplex();
+        pipe
+            .send(new ConnectionClosed())
+            .doOnEach(_ -> deregisterDuplex());
         ctx.fireChannelInactive();
     }
 
