@@ -10,6 +10,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.AttributeKey;
 import lombok.RequiredArgsConstructor;
+import ru.sbp.osiptsoff.tictactoe.message.Message;
 import ru.sbp.osiptsoff.tictactoe.message.event.AuthPerformed;
 import ru.sbp.osiptsoff.tictactoe.message.event.AuthRequested;
 import ru.sbp.osiptsoff.tictactoe.message.event.error.AuthError;
@@ -34,7 +35,9 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         Channel channel = ctx.channel();
 
-        if (isAuthorized(channel)) {
+        if (!Message.class.isAssignableFrom(msg.getClass())) {
+            LOG.info("dropped unknown message");
+        } else if (isAuthorized(channel)) {
             processAuthorized(ctx, msg);
         } else {
             processUnauthorized(ctx, msg);
