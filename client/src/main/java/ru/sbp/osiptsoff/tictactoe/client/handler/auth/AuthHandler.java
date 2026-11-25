@@ -37,7 +37,7 @@ public class AuthHandler extends ChannelInboundHandlerAdapter {
         } else if (isAuthError(msg)) {
             processAuthError(ctx, msg);
         } else {
-            ctx.fireChannelRead(msg);
+            LOG.info("dropped unknown message");
         }
     }
 

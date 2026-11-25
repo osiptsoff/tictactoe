@@ -6,11 +6,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ru.sbp.osiptsoff.tictactoe.message.event.AuthPerformed;
-import ru.sbp.osiptsoff.tictactoe.message.event.AuthRequested;
-import ru.sbp.osiptsoff.tictactoe.message.event.Hello;
-import ru.sbp.osiptsoff.tictactoe.message.event.error.AuthError;
-
 /**
  * To decode message from wire we must know what is written in bytes.
  * For this purpose we will assign identifier for each message.
@@ -22,12 +17,7 @@ public final class IdentifierRegistry {
     private static final Map<Long, Class<?>> IDENTIFIERS_TO_CLASS = new HashMap<>();
 
     static {
-        // will write all message classes here for now
-        // todo replace this with custom annotation and annotation processor
-        register(Hello.class);
-        register(AuthError.class);
-        register(AuthRequested.class);
-        register(AuthPerformed.class);
+        TransportableRegistrar.registerAll();
     }
 
     private IdentifierRegistry() {

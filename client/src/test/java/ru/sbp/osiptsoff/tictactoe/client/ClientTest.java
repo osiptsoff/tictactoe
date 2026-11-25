@@ -29,7 +29,7 @@ class ClientTest {
     }
 
     @Test
-    // @Disabled("working server is needed")
+    @Disabled("working server is needed")
     void clientSendsMessage() {
         ClientConfig config = (ClientConfig) (new YamlConfigLoader().load(ClientConfig.class));
 
