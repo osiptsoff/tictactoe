@@ -21,12 +21,6 @@
 
     <dependencies>
         <dependency>
-            <groupId>ru.sbp.osiptsoff.tictactoe</groupId>
-            <artifactId>processor</artifactId>
-            <version>${annotation-processor.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
             <version>${snakeyaml.version}</version>

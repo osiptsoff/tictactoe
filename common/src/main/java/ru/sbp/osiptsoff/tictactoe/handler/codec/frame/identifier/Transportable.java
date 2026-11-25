@@ -1,4 +1,4 @@
-package ru.sbp.osiptsoff.tictactoe.processor.annotation;
+package ru.sbp.osiptsoff.tictactoe.handler.codec.frame.identifier;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

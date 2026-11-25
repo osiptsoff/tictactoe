@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 @SupportedAnnotationTypes(
-    "ru.sbp.osiptsoff.tictactoe.processor.annotation.Transportable")
+    "ru.sbp.osiptsoff.tictactoe.handler.codec.frame.identifier.Transportable")
 public class TransportableProcessor extends AbstractProcessor {
     private static final String TARGET_PACKAGE = "ru.sbp.osiptsoff.tictactoe.handler.codec.frame.identifier";
     private static final String GENERATED_CLASS_SHORT_NAME = "TransportableRegistrar";
@@ -37,7 +37,7 @@ public class TransportableProcessor extends AbstractProcessor {
         }
 
         TypeElement annotationElement = processingEnv.getElementUtils()
-                .getTypeElement("ru.sbp.osiptsoff.tictactoe.processor.annotation.Transportable");
+                .getTypeElement("ru.sbp.osiptsoff.tictactoe.handler.codec.frame.identifier.Transportable");
         if (annotationElement == null) {
             return false;
         }

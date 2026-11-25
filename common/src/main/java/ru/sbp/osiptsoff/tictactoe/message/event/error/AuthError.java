@@ -2,10 +2,12 @@ package ru.sbp.osiptsoff.tictactoe.message.event.error;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import ru.sbp.osiptsoff.tictactoe.handler.codec.frame.identifier.Transportable;
 
 /**
  * Access error.
  */
+@Transportable
 @RequiredArgsConstructor 
 @Getter
 public class AuthError implements Error {
