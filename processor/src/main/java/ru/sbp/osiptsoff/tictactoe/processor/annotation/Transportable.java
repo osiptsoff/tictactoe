@@ -1,4 +1,4 @@
-package ru.sbp.osiptsoff.tictactoe.handler.codec.frame.identifier;
+package ru.sbp.osiptsoff.tictactoe.processor.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  * in the IdentifierRegistry. This makes class applicable for sending by wire.
  */
 @Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
+@Retention(RetentionPolicy.SOURCE)
 public @interface Transportable {
     
 }

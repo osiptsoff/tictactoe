@@ -16,6 +16,10 @@ public final class IdentifierRegistry {
     private static final Map<Class<?>, Long> REGISTRY = new HashMap<>();
     private static final Map<Long, Class<?>> IDENTIFIERS_TO_CLASS = new HashMap<>();
 
+    static {
+        TransportableRegistrar.registerAll();
+    }
+
     private IdentifierRegistry() {
 
     }

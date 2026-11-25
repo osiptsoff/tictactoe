@@ -2,8 +2,8 @@ package ru.sbp.osiptsoff.tictactoe.message.event;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import ru.sbp.osiptsoff.tictactoe.handler.codec.frame.identifier.Transportable;
 import ru.sbp.osiptsoff.tictactoe.model.ClientDescription;
+import ru.sbp.osiptsoff.tictactoe.processor.annotation.Transportable;
 
 /**
  * Client send this to server when they want to gain access

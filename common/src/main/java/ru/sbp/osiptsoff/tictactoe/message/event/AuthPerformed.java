@@ -2,8 +2,8 @@ package ru.sbp.osiptsoff.tictactoe.message.event;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import ru.sbp.osiptsoff.tictactoe.handler.codec.frame.identifier.Transportable;
 import ru.sbp.osiptsoff.tictactoe.model.ClientId;
+import ru.sbp.osiptsoff.tictactoe.processor.annotation.Transportable;
 
 /**
  * Server registered client.

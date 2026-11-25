@@ -11,6 +11,7 @@
 
     <properties>
         <revision>1.0-SNAPSHOT</revision>
+        <annotation-processor.version>1.0.0</annotation-processor.version>
 
         <java.version>24</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
@@ -96,6 +97,7 @@
     </dependencyManagement>
 
     <modules>
+        <module>processor</module>
         <module>server</module>
         <module>client</module>
         <module>common</module>
@@ -138,6 +140,11 @@
 							<artifactId>lombok</artifactId>
                             <version>${lombok.version}</version>
 						</path>
+                        <path>
+                            <groupId>ru.sbp.osiptsoff.tictactoe</groupId>
+                            <artifactId>processor</artifactId>
+                            <version>${annotation-processor.version}</version>
+                        </path>
 					</annotationProcessorPaths>
 				</configuration>
 				<executions>
